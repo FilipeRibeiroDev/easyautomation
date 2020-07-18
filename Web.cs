@@ -17,7 +17,6 @@ namespace EasyAutomationFramework
     public static class Web
     {
         private static IWebDriver driver;
-
         /// <summary>
         /// Método para iniciar um Browser
         /// Autor: Filipe Ribeiro
@@ -34,6 +33,10 @@ namespace EasyAutomationFramework
                         var sc = ChromeDriverService.CreateDefaultService();
                         sc.HideCommandPromptWindow = true;
                         ChromeOptions c = new ChromeOptions();
+                        c.AddArgument("--incognito");
+                        c.AddExcludedArgument("enable-automation");
+                        c.AddAdditionalCapability("useAutomationExtension", false);
+                        c.AddArgument("--start-maximized");
                         driver = new ChromeDriver(sc, c);
                         return driver;
                     case TypeDriver.PhantomJS:
@@ -60,10 +63,9 @@ namespace EasyAutomationFramework
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message.ToString());
             }
 
         }
@@ -106,28 +108,28 @@ namespace EasyAutomationFramework
             try
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
-                IWebElement input = null;
+                IWebElement webElement = null;
                 switch (typeElement)
                 {
                     case TypeElement.Id:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
                         break;
                     case TypeElement.Name:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Name(element)));
                         break;
                     case TypeElement.Xpath:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.XPath(element)));
                         break;
                     case TypeElement.CssSelector:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(element)));
                         break;
                 }
 
-                input.Click();
+                webElement.Click();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found.");
+                throw new Exception($"Element {element} not found. More info: {ex.Message}");
             }
         }
         /// <summary>
@@ -143,28 +145,28 @@ namespace EasyAutomationFramework
             try
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
-                IWebElement input = null;
+                IWebElement webElement = null;
                 switch (typeElement)
                 {
                     case TypeElement.Id:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
                         break;
                     case TypeElement.Name:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Name(element)));
                         break;
                     case TypeElement.Xpath:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.XPath(element)));
                         break;
                     case TypeElement.CssSelector:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(element)));
                         break;
                 }
 
-                return input.Text;
+                return webElement.Text;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found.");
+                throw new Exception($"Element {element} not found. More info: {ex.Message}");
             }
         }
         /// <summary>
@@ -180,28 +182,28 @@ namespace EasyAutomationFramework
             try
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
-                IWebElement input = null;
+                IWebElement webElement = null;
                 switch (typeElement)
                 {
                     case TypeElement.Id:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
                         break;
                     case TypeElement.Name:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Name(element)));
                         break;
                     case TypeElement.Xpath:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.XPath(element)));
                         break;
                     case TypeElement.CssSelector:
-                        input = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(element)));
                         break;
                 }
 
-                input.SendKeys(value);
+                webElement.SendKeys(value);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found");
+                throw new Exception($"Element {element} not found. More info: {ex.Message}");
             }
 
         }
@@ -225,13 +227,13 @@ namespace EasyAutomationFramework
                         webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
                         break;
                     case TypeElement.Name:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Name(element)));
                         break;
                     case TypeElement.Xpath:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.XPath(element)));
                         break;
                     case TypeElement.CssSelector:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(element)));
                         break;
                 }
 
@@ -276,9 +278,9 @@ namespace EasyAutomationFramework
 
                 return dataTable;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found");
+                throw new Exception($"Element {element} not found. More info: {ex.Message}");
             }
         }
         /// <summary>
@@ -325,9 +327,9 @@ namespace EasyAutomationFramework
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception($"Option {value} could not be selected on element {element}.");
+                throw new Exception($"Option {value} could not be selected on element {element}. More info: {ex.Message}");
             }
         }
         /// <summary>
@@ -339,7 +341,7 @@ namespace EasyAutomationFramework
         /// <param name="uniqueName"></param>
         /// <param name="timeout"></param>
         /// <returns></returns>
-        public static Image GetWebImage(TypeElement typeElement, string element, string nameImage, int timeout = 3)
+        public static Bitmap GetWebImage(TypeElement typeElement, string element, string nameImage, int timeout = 3)
         {
             try
             {
@@ -356,13 +358,13 @@ namespace EasyAutomationFramework
                         webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
                         break;
                     case TypeElement.Name:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Name(element)));
                         break;
                     case TypeElement.Xpath:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.XPath(element)));
                         break;
                     case TypeElement.CssSelector:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(element)));
                         break;
                 }
 
@@ -384,32 +386,31 @@ namespace EasyAutomationFramework
                 Bitmap bmpImage = new Bitmap(img);
                 var cropedImag = bmpImage.Clone(rect, bmpImage.PixelFormat);
 
-                return cropedImag;
+                return (Bitmap)cropedImag;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw new Exception($"Element {element} not found");
+                throw new Exception($"Element {element} not found. More info: {ex.Message}");
             }
         }
         /// <summary>
         /// Método para resolver captcha
         /// Autor: Filipe Ribeiro
         /// </summary>
-        /// <param name="imagePix"></param>
+        /// <param name="imageBitman"></param>
         /// <returns></returns>
-        public static string ResolveCaptcha(Pix imagePix)
+        public static string ResolveCaptcha(Bitmap imageBitman)
         {
             string res = "";
             try
             {
 
-                using (var engine = new TesseractEngine("tessdata", "eng", EngineMode.Default))
+                using (var engine = new TesseractEngine("./tessdata", "eng", EngineMode.Default))
                 {
                     engine.SetVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
                     engine.SetVariable("tessedit_unrej_any_wd", true);
 
-                    using (var page = engine.Process(imagePix, PageSegMode.Auto))
+                    using (var page = engine.Process(imageBitman, PageSegMode.Auto))
                     {
                         res = page.GetText();
                     }
@@ -441,13 +442,13 @@ namespace EasyAutomationFramework
                         webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
                         break;
                     case TypeElement.Name:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Name(element)));
                         break;
                     case TypeElement.Xpath:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.XPath(element)));
                         break;
                     case TypeElement.CssSelector:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(element)));
                         break;
                 }
 
@@ -456,9 +457,9 @@ namespace EasyAutomationFramework
                 driver.SwitchTo().Window(popupWindowHandle);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found");
+                throw new Exception($"Element {element} not found. More info: {ex.Message}");
             }
         }
         /// <summary>
@@ -471,9 +472,9 @@ namespace EasyAutomationFramework
             {
                 driver.SwitchTo().DefaultContent();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception($"Driver not found");
+                throw new Exception($"Driver not found. More info: {ex.Message}");
             }
         }
         /// <summary>
@@ -495,21 +496,21 @@ namespace EasyAutomationFramework
                         webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
                         break;
                     case TypeElement.Name:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Name(element)));
                         break;
                     case TypeElement.Xpath:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.XPath(element)));
                         break;
                     case TypeElement.CssSelector:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(element)));
                         break;
                 }
 
                 driver.SwitchTo().Frame(webElement);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found");
+                throw new Exception($"Element {element} not found. More info: {ex.Message}");
             }
         }
         /// <summary>
@@ -524,9 +525,9 @@ namespace EasyAutomationFramework
                 IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
                 js.ExecuteScript(script);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception($"Falha Script");
+                throw new Exception($"Falha execute in Script. More info: {ex.Message}");
             }
         }
         /// <summary>
@@ -565,23 +566,22 @@ namespace EasyAutomationFramework
                         webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
                         break;
                     case TypeElement.Name:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Name(element)));
                         break;
                     case TypeElement.Xpath:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.XPath(element)));
                         break;
                     case TypeElement.CssSelector:
-                        webElement = wait.Until(ExpectedConditions.ElementExists(By.Id(element)));
+                        webElement = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(element)));
                         break;
                 }
 
 
                 wait.Until(ElementIsVisible(webElement));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception($"More info: {ex.Message}");
             }
         }
         private static Func<IWebDriver, bool> ElementIsVisible(IWebElement element)

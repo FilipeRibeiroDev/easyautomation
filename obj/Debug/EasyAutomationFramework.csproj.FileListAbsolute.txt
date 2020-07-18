@@ -28,13 +28,17 @@ D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\IKVM.Runtime.dll
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\IKVM.Runtime.JNI.dll
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\jempbox-1.8.2.dll
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\junit.dll
+D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\Newtonsoft.Json.dll
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\pdfbox-1.8.2.dll
+D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\Sikuli4Net.dll
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\System.Drawing.Common.dll
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\Tesseract.dll
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\WebDriver.dll
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\WebDriver.Support.dll
+D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\Newtonsoft.Json.xml
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\WebDriver.xml
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\WebDriver.Support.xml
+D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\obj\Debug\EasyAutomationFramework.csprojAssemblyReference.cache
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\obj\Debug\EasyAutomationFramework.csproj.CoreCompileInputs.cache
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\obj\Debug\EasyAutomationFramework.csproj.CopyComplete
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\obj\Debug\Easy.Automation.dll
