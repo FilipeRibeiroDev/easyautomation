@@ -37,34 +37,34 @@ TypeSelect
 ```
 
 ## List of methods
-### Web.StartBrowser (TypeDriver typeDriver);
+### new Web().StartBrowser (TypeDriver typeDriver);
 Method to start browser.
 
-### Web.CloseBrowser ();
+### new Web().CloseBrowser ();
 Method to exit Browser.
 
-### Web.Navigate (string url);
+### new Web().Navigate (string url);
 Method for navigating to a page
 
-### Web.Click (TypeElement typeElement, string element, int timeout = 3): return void;
+### new Web().Click (TypeElement typeElement, string element, int timeout = 3): return void;
 Method to click on element of the web page.
 
-### Web.GetValue (TypeElement typeElement, string element, int timeout = 3): return string;
+### new Web().GetValue (TypeElement typeElement, string element, int timeout = 3): return string;
 Method for getting page element value
 
-### Web.AssignValue (TypeElement typeElement, string element, string value, int timeout = 3): return void;
+### new Web().AssignValue (TypeElement typeElement, string element, string value, int timeout = 3): return void;
 Method to assign value in field
 
-### Web.GetTableData (TypeElement typeElement, string element, int timeout = 3): return DataTable;
+### new Web().GetTableData (TypeElement typeElement, string element, int timeout = 3): return DataTable;
 Method for getting data from a table
 
-### Web.SelectValue (TypeElement typeElement, TypeSelect typeSelect, string element, string value, int timeout = 3) return void;
+### new Web().SelectValue (TypeElement typeElement, TypeSelect typeSelect, string element, string value, int timeout = 3) return void;
 Method for selecting a value in a combobox
 
-### Web.GetWebImage (TypeElement typeElement, string element, string nameImage, int timeout = 3): return Bitmap;
+### new Web().GetWebImage (TypeElement typeElement, string element, string nameImage, int timeout = 3): return Bitmap;
 Method to get image from the web
 
-### Web.ResolveCaptcha (Bitmap imageBitman): return string
+### new Web().ResolveCaptcha (Bitmap imageBitman): return string
 Method to resolve Catpcha
 
 # OCR automation
