@@ -103,6 +103,9 @@ Method to convert list to DataTable
 
 # Example
 ```
+using EasyAutomationFramework;
+using System.Data;
+
 public class Example : Web
     {
         
