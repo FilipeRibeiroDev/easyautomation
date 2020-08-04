@@ -38,7 +38,6 @@ D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\WebDriver.Support.dl
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\Newtonsoft.Json.xml
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\WebDriver.xml
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\bin\Debug\WebDriver.Support.xml
-D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\obj\Debug\EasyAutomationFramework.csprojAssemblyReference.cache
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\obj\Debug\EasyAutomationFramework.csproj.CoreCompileInputs.cache
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\obj\Debug\EasyAutomationFramework.csproj.CopyComplete
 D:\ProjetoTFS\Robot\Robot\EasyAutomationFramework\obj\Debug\Easy.Automation.dll

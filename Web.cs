@@ -9,21 +9,23 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using Tesseract;
 
 namespace EasyAutomationFramework
 {
-    public static class Web
+    /// <summary>
+    /// Resumo: Dar Suporte para desenvolvimento de automação Web.
+    /// </summary>
+    public class Web 
     {
-        private static IWebDriver driver;
+        private IWebDriver driver;
         /// <summary>
         /// Método para iniciar um Browser
         /// Autor: Filipe Ribeiro
         /// </summary>
         /// <param name="typeDriver"></param>
         /// <returns></returns>
-        public static IWebDriver StartBrowser(TypeDriver typeDriver = TypeDriver.GoogleChorme)
+        public EasyReturn.Web StartBrowser(TypeDriver typeDriver = TypeDriver.GoogleChorme)
         {
             try
             {
@@ -38,7 +40,7 @@ namespace EasyAutomationFramework
                         c.AddAdditionalCapability("useAutomationExtension", false);
                         c.AddArgument("--start-maximized");
                         driver = new ChromeDriver(sc, c);
-                        return driver;
+                        break;
                     case TypeDriver.PhantomJS:
                         var ps = PhantomJSDriverService.CreateDefaultService();
                         ps.HideCommandPromptWindow = true;
@@ -46,26 +48,36 @@ namespace EasyAutomationFramework
                         ps.AddArgument("--script-language='javascript'");
                         PhantomJSOptions p = new PhantomJSOptions();
                         driver = new PhantomJSDriver(ps, p);
-                        return driver;
+                        break;
                     case TypeDriver.InternetExplorer:
                         var ie = InternetExplorerDriverService.CreateDefaultService();
                         ie.HideCommandPromptWindow = true;
                         InternetExplorerOptions i = new InternetExplorerOptions();
                         driver = new InternetExplorerDriver(ie, i);
-                        return driver;
+                        break;
                     case TypeDriver.FireFox:
                         var fx = FirefoxDriverService.CreateDefaultService();
                         fx.HideCommandPromptWindow = true;
                         driver = new FirefoxDriver(fx);
-                        return driver;
+                        break;
                     default:
-                        return null;
+                        break;
                 }
 
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = true
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message.ToString());
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = false,
+                    Error = ex.Message.ToString()
+                };
             }
 
         }
@@ -74,7 +86,7 @@ namespace EasyAutomationFramework
         /// Autor: Filipe Ribeiro
         /// </summary>
         /// <param name="driver"></param>
-        public static void CloseBrowser()
+        public void CloseBrowser()
         {
             if (driver == null) return;
             try
@@ -92,9 +104,27 @@ namespace EasyAutomationFramework
         /// Método para navegar
         /// </summary>
         /// <param name="url"></param>
-        public static void Navigate(string url)
+        public EasyReturn.Web Navigate(string url)
         {
-            driver.Navigate().GoToUrl(url);
+            try
+            {
+                driver.Navigate().GoToUrl(url);
+
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = false,
+                    Error = $"More info: {ex.Message}"
+                };
+            }
         }
         /// <summary>
         /// Método para simular Click
@@ -103,7 +133,7 @@ namespace EasyAutomationFramework
         /// <param name="typeElement"></param>
         /// <param name="element"></param>
         /// <param name="timeout"></param>
-        public static void Click(TypeElement typeElement, string element, int timeout = 3)
+        public EasyReturn.Web Click(TypeElement typeElement, string element, int timeout = 3)
         {
             try
             {
@@ -126,10 +156,20 @@ namespace EasyAutomationFramework
                 }
 
                 webElement.Click();
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = true
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found. More info: {ex.Message}");
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = false,
+                    Error = $"Element {element} not found. More info: {ex.Message}"
+                };
             }
         }
         /// <summary>
@@ -140,7 +180,7 @@ namespace EasyAutomationFramework
         /// <param name="element"></param>
         /// <param name="timeout"></param>
         /// <returns></returns>
-        public static string GetValue(TypeElement typeElement, string element, int timeout = 3)
+        public EasyReturn.Web GetValue(TypeElement typeElement, string element, int timeout = 3)
         {
             try
             {
@@ -162,11 +202,21 @@ namespace EasyAutomationFramework
                         break;
                 }
 
-                return webElement.Text;
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Value = webElement.Text,
+                    Sucesso = true
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found. More info: {ex.Message}");
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = false,
+                    Error = $"Element {element} not found. More info: {ex.Message}"
+                };
             }
         }
         /// <summary>
@@ -177,7 +227,7 @@ namespace EasyAutomationFramework
         /// <param name="element"></param>
         /// <param name="value"></param>
         /// <param name="timeout"></param>
-        public static void AssignValue(TypeElement typeElement, string element, string value, int timeout = 3)
+        public EasyReturn.Web AssignValue(TypeElement typeElement, string element, string value, int timeout = 3)
         {
             try
             {
@@ -200,10 +250,20 @@ namespace EasyAutomationFramework
                 }
 
                 webElement.SendKeys(value);
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = true
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found. More info: {ex.Message}");
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = false,
+                    Error = $"Element {element} not found. More info: {ex.Message}"
+                };
             }
 
         }
@@ -215,7 +275,7 @@ namespace EasyAutomationFramework
         /// <param name="element"></param>
         /// <param name="timeout"></param>
         /// <returns></returns>
-        public static DataTable GetTableData(TypeElement typeElement, string element, int timeout = 3)
+        public EasyReturn.Web GetTableData(TypeElement typeElement, string element, int timeout = 3)
         {
             try
             {
@@ -275,12 +335,21 @@ namespace EasyAutomationFramework
                     contador++;
                 }
 
-
-                return dataTable;
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = true,
+                    table = dataTable
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found. More info: {ex.Message}");
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = false,
+                    Error = $"Element {element} not found. More info: {ex.Message}"
+                };
             }
         }
         /// <summary>
@@ -292,7 +361,7 @@ namespace EasyAutomationFramework
         /// <param name="element"></param>
         /// <param name="value"></param>
         /// <param name="timeout"></param>
-        public static void SelectValue(TypeElement typeElement, TypeSelect typeSelect, string element, string value, int timeout = 3)
+        public EasyReturn.Web SelectValue(TypeElement typeElement, TypeSelect typeSelect, string element, string value, int timeout = 3)
         {
             try
             {
@@ -325,11 +394,20 @@ namespace EasyAutomationFramework
                         select.SelectByValue(value);
                         break;
                 }
-
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = true
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Option {value} could not be selected on element {element}. More info: {ex.Message}");
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = false,
+                    Error = $"Option {value} could not be selected on element {element}. More info: {ex.Message}"
+                };
             }
         }
         /// <summary>
@@ -341,7 +419,7 @@ namespace EasyAutomationFramework
         /// <param name="uniqueName"></param>
         /// <param name="timeout"></param>
         /// <returns></returns>
-        public static Bitmap GetWebImage(TypeElement typeElement, string element, string nameImage, int timeout = 3)
+        public EasyReturn.Web GetWebImage(TypeElement typeElement, string element, string nameImage, int timeout = 3)
         {
             try
             {
@@ -386,11 +464,21 @@ namespace EasyAutomationFramework
                 Bitmap bmpImage = new Bitmap(img);
                 var cropedImag = bmpImage.Clone(rect, bmpImage.PixelFormat);
 
-                return (Bitmap)cropedImag;
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Bitmap = (Bitmap)cropedImag,
+                    Sucesso = true
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found. More info: {ex.Message}");
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Error = $"Element {element} not found. More info: {ex.Message}",
+                    Sucesso = false
+                };
             }
         }
         /// <summary>
@@ -399,7 +487,7 @@ namespace EasyAutomationFramework
         /// </summary>
         /// <param name="imageBitman"></param>
         /// <returns></returns>
-        public static string ResolveCaptcha(Bitmap imageBitman)
+        public EasyReturn.Web ResolveCaptcha(Bitmap imageBitman)
         {
             string res = "";
             try
@@ -415,13 +503,25 @@ namespace EasyAutomationFramework
                         res = page.GetText();
                     }
                 }
+
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Value = res.Replace("\n", "").Replace(" ", "").Replace(" ", ""),
+                    Sucesso = true
+                };
             }
-            catch
+            catch(Exception ex)
             {
-
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Error = ex.Message.ToString(),
+                    Sucesso = false
+                };
             }
 
-            return res.Replace("\n", "").Replace(" ", "").Replace(" ", "");
+             
         }
         /// <summary>
         /// Método para acessar Pop Up
@@ -430,7 +530,7 @@ namespace EasyAutomationFramework
         /// <param name="typeElement"></param>
         /// <param name="element"></param>
         /// <param name="timeout"></param>
-        public static void AccessPopUpClick(TypeElement typeElement, string element, int timeout = 3)
+        public EasyReturn.Web AccessPopUpClick(TypeElement typeElement, string element, int timeout = 3)
         {
             try
             {
@@ -456,25 +556,46 @@ namespace EasyAutomationFramework
                 string popupWindowHandle = finder.Click(webElement);
                 driver.SwitchTo().Window(popupWindowHandle);
 
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = true
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found. More info: {ex.Message}");
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Error = $"Element {element} not found. More info: {ex.Message}",
+                    Sucesso = false
+                };
             }
         }
         /// <summary>
         /// Método para sair do Pop Up
         /// Autor: Filipe Ribeiro
         /// </summary>
-        public static void LeavePopUp()
+        public EasyReturn.Web LeavePopUp()
         {
             try
             {
                 driver.SwitchTo().DefaultContent();
+                
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = true
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Driver not found. More info: {ex.Message}");
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Error = $"Driver not found. More info: {ex.Message}",
+                    Sucesso = false
+                };
             }
         }
         /// <summary>
@@ -484,7 +605,7 @@ namespace EasyAutomationFramework
         /// <param name="typeElement"></param>
         /// <param name="element"></param>
         /// <param name="timeout"></param>
-        public static void AccessFrame(TypeElement typeElement, string element, int timeout = 3)
+        public EasyReturn.Web AccessFrame(TypeElement typeElement, string element, int timeout = 3)
         {
             try
             {
@@ -507,10 +628,21 @@ namespace EasyAutomationFramework
                 }
 
                 driver.SwitchTo().Frame(webElement);
+
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = true
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Element {element} not found. More info: {ex.Message}");
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Error = $"Element {element} not found. More info: {ex.Message}",
+                    Sucesso = false
+                };
             }
         }
         /// <summary>
@@ -518,16 +650,27 @@ namespace EasyAutomationFramework
         /// Autor: Filipe Ribeiro
         /// </summary>
         /// <param name="script"></param>
-        public static void ExecuteScript(string script)
+        public EasyReturn.Web ExecuteScript(string script)
         {
             try
             {
                 IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
                 js.ExecuteScript(script);
+
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = true
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Falha execute in Script. More info: {ex.Message}");
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Error = $"Falha execute in Script. More info: {ex.Message}",
+                    Sucesso = false
+                };
             }
         }
         /// <summary>
@@ -535,7 +678,7 @@ namespace EasyAutomationFramework
         /// Autor: Filipe Ribeiro
         /// </summary>
         /// <param name="timeout"></param>
-        public static void WaitForLoad(int timeout = 60)
+        public void WaitForLoad(int timeout = 60)
         {
             try
             {
@@ -553,7 +696,7 @@ namespace EasyAutomationFramework
         /// <param name="typeElement"></param>
         /// <param name="element"></param>
         /// <param name="timeout"></param>
-        public static void WaitForElement(TypeElement typeElement, string element, int timeout = 3)
+        public EasyReturn.Web WaitForElement(TypeElement typeElement, string element, int timeout = 3)
         {
             try
             {
@@ -578,10 +721,20 @@ namespace EasyAutomationFramework
 
 
                 wait.Until(ElementIsVisible(webElement));
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Sucesso = true
+                };
             }
             catch (Exception ex)
             {
-                throw new Exception($"More info: {ex.Message}");
+                return new EasyReturn.Web
+                {
+                    driver = driver,
+                    Error = $"More info: {ex.Message}",
+                    Sucesso = false
+                };
             }
         }
         private static Func<IWebDriver, bool> ElementIsVisible(IWebElement element)
