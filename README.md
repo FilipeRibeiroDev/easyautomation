@@ -34,37 +34,46 @@ TypeSelect
    Value,
    Text
 }
+EasyReturn.Web
+{
+     IWebDriver driver,
+     DataTable table,
+     string Error,
+     string Value,  
+     bool Sucesso,
+     Bitmap Bitmap
+}
 ```
 
 ## List of methods
-### new Web().StartBrowser (TypeDriver typeDriver);
+### new Web().StartBrowser (TypeDriver typeDriver): return EasyReturn.Web;
 Method to start browser.
 
 ### new Web().CloseBrowser ();
 Method to exit Browser.
 
-### new Web().Navigate (string url);
+### new Web().Navigate (string url): return EasyReturn.Web;
 Method for navigating to a page
 
-### new Web().Click (TypeElement typeElement, string element, int timeout = 3): return void;
+### new Web().Click (TypeElement typeElement, string element, int timeout = 3): return EasyReturn.Web;
 Method to click on element of the web page.
 
-### new Web().GetValue (TypeElement typeElement, string element, int timeout = 3): return string;
+### new Web().GetValue (TypeElement typeElement, string element, int timeout = 3): return EasyReturn.Web;
 Method for getting page element value
 
-### new Web().AssignValue (TypeElement typeElement, string element, string value, int timeout = 3): return void;
+### new Web().AssignValue (TypeElement typeElement, string element, string value, int timeout = 3): return EasyReturn.Web;
 Method to assign value in field
 
-### new Web().GetTableData (TypeElement typeElement, string element, int timeout = 3): return DataTable;
+### new Web().GetTableData (TypeElement typeElement, string element, int timeout = 3): return EasyReturn.Web;
 Method for getting data from a table
 
-### new Web().SelectValue (TypeElement typeElement, TypeSelect typeSelect, string element, string value, int timeout = 3) return void;
+### new Web().SelectValue (TypeElement typeElement, TypeSelect typeSelect, string element, string value, int timeout = 3): return EasyReturn.Web;
 Method for selecting a value in a combobox
 
-### new Web().GetWebImage (TypeElement typeElement, string element, string nameImage, int timeout = 3): return Bitmap;
+### new Web().GetWebImage (TypeElement typeElement, string element, string nameImage, int timeout = 3): return EasyReturn.Web;
 Method to get image from the web
 
-### new Web().ResolveCaptcha (Bitmap imageBitman): return string
+### new Web().ResolveCaptcha (Bitmap imageBitman): return EasyReturn.Web;
 Method to resolve Catpcha
 
 # OCR automation
@@ -91,3 +100,29 @@ Method to extract text from PDF
 
 ### ConvertTo <T> (IList <T> list): return DataTable;
 Method to convert list to DataTable
+
+# Example
+```
+public class Example : Web
+    {
+        
+        public void StartProcess()
+        {
+
+            StartBrowser(TypeDriver.GoogleChorme);
+
+            EasyReturn.Web web = Navigate("https://datatables.net/examples/basic_init/data_rendering.html");
+            if (web.Sucesso)
+            {
+               
+                SelectValue(TypeElement.Name, TypeSelect.Value, "example_length", "100", 10);
+                EasyReturn.Web table = GetTableData(TypeElement.Id, "example");
+               
+                foreach (DataRow row in table.table.Rows)
+                {
+                    System.Console.WriteLine(row["Name"].ToString());
+                }
+            }
+        }
+    }
+ ```
