@@ -2,16 +2,17 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.0.0.6</version>
+    <version>$version$</version>
     <title>$title$</title>
-    <authors>Filipe Ribeiro Brito</authors>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <projectUrl>http://project_url_here_or_delete_this_line/</projectUrl>
+    <projectUrl>https://github.com/FilipeRibeiro-rpa/easyautomation/</projectUrl>
     <iconUrl>http://icon_url_here_or_delete_this_line/</iconUrl>
-    <description>Library to facilitate the construction of process automation.</description>
+    <description>$description$</description>
     <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
-    <copyright>$copyright$</copyright>
-    <tags>Automation RPA</tags>
+    <copyright>Copyright 2020</copyright>
+    <tags>Tag1 Tag2</tags>
   </metadata>
 </package>

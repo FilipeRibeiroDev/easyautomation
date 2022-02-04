@@ -18,7 +18,7 @@ namespace EasyAutomationFramework
     /// </summary>
     public class Web 
     {
-        private IWebDriver driver;
+        public IWebDriver driver;
         /// <summary>
         /// Método para iniciar um Browser
         /// Autor: Filipe Ribeiro
@@ -159,6 +159,7 @@ namespace EasyAutomationFramework
                 return new EasyReturn.Web
                 {
                     driver = driver,
+                    element = webElement,
                     Sucesso = true
                 };
             }
@@ -205,6 +206,7 @@ namespace EasyAutomationFramework
                 return new EasyReturn.Web
                 {
                     driver = driver,
+                    element = webElement,
                     Value = webElement.Text,
                     Sucesso = true
                 };
@@ -253,6 +255,7 @@ namespace EasyAutomationFramework
                 return new EasyReturn.Web
                 {
                     driver = driver,
+                    element = webElement,
                     Sucesso = true
                 };
             }
@@ -338,6 +341,7 @@ namespace EasyAutomationFramework
                 return new EasyReturn.Web
                 {
                     driver = driver,
+                    element = webElement,
                     Sucesso = true,
                     table = dataTable
                 };
@@ -467,6 +471,7 @@ namespace EasyAutomationFramework
                 return new EasyReturn.Web
                 {
                     driver = driver,
+                    element = webElement,
                     Bitmap = (Bitmap)cropedImag,
                     Sucesso = true
                 };
@@ -559,6 +564,7 @@ namespace EasyAutomationFramework
                 return new EasyReturn.Web
                 {
                     driver = driver,
+                    element = webElement,
                     Sucesso = true
                 };
             }
@@ -632,6 +638,7 @@ namespace EasyAutomationFramework
                 return new EasyReturn.Web
                 {
                     driver = driver,
+                    element = webElement,
                     Sucesso = true
                 };
             }
@@ -724,6 +731,7 @@ namespace EasyAutomationFramework
                 return new EasyReturn.Web
                 {
                     driver = driver,
+                    element = webElement,
                     Sucesso = true
                 };
             }

@@ -16,6 +16,7 @@ namespace EasyAutomationFramework
         {
 
             public IWebDriver driver { get; set; }
+            public IWebElement element { get; set; }
             public DataTable table { get; set; }
             public string Error { get; set; }
             public string Value { get; set; }
